@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <style>
+        body{
+    margin: 2em
+    }
+
+    </style>
+    <title>HarjoitusTyö</title>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm">
+            <a href="#" id='nyKayttaja' onclick="muokkaaTunnusta()" data-toggle="modal" data-target="#kayttajaMuokIkkuna">
+                Terve {{loggedUser}}</a> <br>
+            <a class="nav-item"><a class="nav-link" href="/signout">Uloskirjautuminen</a>
+                <button id='tilausNappi' data-toggle="modal" data-target="#tilausIkkuna"> Tee tilaus</button>
+                <button data-toggle="modal" data-target="#vikaTietoIkkuna"> Toimintolista</button>
+
+                <br>
+                <!-- <button id='tarjousNappi'>Tee tarjous</button> <br> -->
+        </div>
+    </div>
+    <!--Taulut tilauksia ja tarjouksia varten-->
+    <div class="row">
+        <div class="table-responsive col-sm">
+            <div class="table-responsive">
+                <h2 class="sub-header">Tilaukset</h2>
+                <table class="table table-striped" id="tauluTilaus"></table>
+            </div>
+        </div>
+        <!-- <div class="table-responsive col-sm">
+            <div class="table-responsive">
+                <h2 class="sub-header">Tarjoukset</h2>
+                <table class="table table-striped" id="tauluTarjous"></table>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+<!--Tilausikkuna-->
+<div id="tilausIkkuna" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tilaa työ</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="tilausTaulu">
+                <form id="tilausFormi">
+                    <div class="form-group">
+                        <label>Työ:</label>
+                        <input type="text" class="form-control" id="tyo" name="tyo">
+                    </div>
+                    <div class="form-group">
+                        <label>Työnkuvaus:</label>
+                        <textarea class="form-control" rows="5" class="form-control" id="kuvaus" name="kuvaus"></textarea>
+                    </div>
+                    <button type="button" id="tyoTilSub" class="btn btn-primary">Lähetä tilaus</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="suljeTilausDialog">Sulje</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Tilausmuokkausikkuna-->
+<div id="tilausMuokIkkuna" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tilaa työ</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="tilausMuokTaulu">
+                <form id="tilausMuokFormi">
+                    <div class="form-group">
+                        <label>Työ:</label>
+                        <input type="text" class="form-control" id="tyo" name="tyo">
+                    </div>
+                    <div class="form-group">
+                        <label>Työnkuvaus:</label>
+                        <textarea class="form-control" rows="5" class="form-control" id="kuvausMuok" name="kuvaus"></textarea>
+                    </div>
+                    <button type="button" id="tyoMuokSub" class="btn btn-primary">Tallenna</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="suljeMuokDialog">Sulje</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Käyttäjän muokkausikkuna -->
+<div id="kayttajaMuokIkkuna" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Muokkaa tietojasi</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="kayttajaMuokTaulu" class="modal-body">
+                <form id="kayttajaMuokFormi">
+                    <div class="form-group">
+                        <label for="pwd">Nimi:</label>
+                        <input type="text" class="form-control" id="modifyrealname" name="nimi">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pwd">Käyttäjätunnus:</label>
+                        <input type="text" class="form-control" id="modifyusername" name="tunnus">
+                        </select> </div>
+                    <div class="form-group">
+                        <label for="pwd">Salasana:</label>
+                        <input type="text" class="form-control" id="modifypassword" name="salasana">
+                    </div>
+                    <button type="button" id="kaytMuokSub" class="btn btn-primary">Tallenna tiedot</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="suljeKaytMuokDialog">Sulje</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="vikaTietoIkkuna" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Tähtään tehtävällä 2 korotukseen</h4>
+            </div>
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-success">1 Käyttäjän rekisteröinti</li>
+                    <li class="list-group-item list-group-item-success">2 Sisäänkirjautuminen</li>
+                    <li class="list-group-item list-group-item-success">3 Omien tietojen muuttaminen</li>
+                    <li class="list-group-item list-group-item-success">4 Uloskirjautuminen</li>
+                    <li class="list-group-item list-group-item-success">5 Työtilauksen tekeminen</li>
+                    <li class="list-group-item list-group-item-success">6 Työtilausten selaaminen</li>
+                    <li class="list-group-item list-group-item-success">7 Työtilauksen muuttaminen</li>
+
+                    <li class="list-group-item list-group-item-warning">8 Työtilauksen poistaminen <span class="badge badge-primary badge-pill">Vain
+                            nappi, ei toimintoa</span>
+                    </li>
+                    <li class="list-group-item list-group-item-success">9 Työtilauksella on status, joka
+                        kertoo työn etenemisestä</li>
+                    <li class="list-group-item list-group-item-warning">10 Yksittäisiä sivuja EI pysty käyttämään ilman
+                        rekisteröintiä<span class="badge badge-primary badge-pill">Restapin käyttöä ei estetä</span>
+                    </li>
+                    <li class="list-group-item list-group-item-success">11 Päivämäärät täytyy näkyä suomalaisessa
+                        muodossa</li>
+                    <li class="list-group-item list-group-item-success">12 Jokaisella sivulla näkyy sisäänkirjautuneen
+                        käyttäjän nimi (tai tunnus)</li>
+                    <li class="list-group-item list-group-item-danger">13 Asiakkaalle on
+                        mahdollista tallentaa seuraavat
+                        kentät: nimi, käyntiosoite, laskutusosoite ja
+                        puhelinnumero sekä email-osoite. Lisäksi
+                        voidaan tallettaa asunnon tyyppi (omakotitalo,
+                        vapaa-ajan asunto, maatila, tyyppejä voi tulla
+                        lisääkin), asunnon pinta-ala ja tontin koko.</li>
+                    <li class="list-group-item list-group-item-danger">14 Työtilauksella on pakollisina tietoina
+                        tilaaja, työn
+                        kuvaus, tilauspvm, aloituspvm, valmistumispvm,
+                        hyväksymispvm, hylkäämispvm,
+                        vapaamuotoinen kommentti tehdystä työstä,
+                        käytetty tuntimäärä sekä vapaamuotoinen
+                        selostus kuluneista tarvikkeista. Lisäksi yhtenä
+                        kenttänä on kustannusarvio-kenttä, johon
+                        toimittaja voi arvoida kustannukset (varsinkin
+                        jos tarjouspyyntö johtaa tilaukseen, on tällä
+                        kentällä käyttöä).</li>
+                    <li class="list-group-item list-group-item-danger">15 Tarjouspyynnön tekeminen </li>
+                    <li class="list-group-item list-group-item-danger">16 Tarjouspyynnön poistaminen</li>
+                    <li class="list-group-item list-group-item-danger">17 Tarjouspyynnön hyväksyminen</li>
+                    <li class="list-group-item list-group-item-danger">18 Tarjouspyynnön hylkääminen</li>
+                    <li class="list-group-item list-group-item-danger">19 Tarjouspyynnölle pakollisia tietoja ovat
+                        tilaaja,
+                        kuvaus työstä, jättöpvm, kustannusarvio,
+                        vastaamispvm ja status </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Sulje</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="kotisivu.js"></script>
+
+</html>
